@@ -1,13 +1,6 @@
-//
-//  ContentView.swift
-//  thock
-//
-//  Created by Achyut Krishna Byanjankar on 4/16/24.
-//
-
 import SwiftUI
 
-struct ContentView: View {
+struct Menu: View {
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -20,5 +13,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    Menu()
 }
