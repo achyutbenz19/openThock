@@ -4,8 +4,10 @@ import AppKit
 
 class KeyListener: ObservableObject {
     private var eventTap: CFMachPort?
+    @ObservedObject var settings: SettingsViewModel
 
-    init() {
+    init(settings: SettingsViewModel) {
+        self.settings = settings
         setupEventTap()
     }
 
@@ -20,19 +22,8 @@ class KeyListener: ObservableObject {
             place: .headInsertEventTap,
             options: .defaultTap,
             eventsOfInterest: CGEventMask(eventMask),
-            callback: { (proxy, type, event, refcon) -> Unmanaged<CGEvent>? in
-                if type == .keyDown {
-                    let keyCode = event.getIntegerValueField(.keyboardEventKeycode)
-                    print("Key Pressed: \(keyCode)")
-
-                    if let sound = NSSound(named: NSSound.Name("Hero"))?.copy() as? NSSound {
-                        sound.play()
-                    }
-                }
-
-                return Unmanaged.passRetained(event)
-            },
-            userInfo: nil
+            callback: KeyListener.eventCallback,
+            userInfo: Unmanaged.passUnretained(self).toOpaque()
         )
 
         if let eventTap = eventTap {
@@ -46,5 +37,23 @@ class KeyListener: ObservableObject {
         if let eventTap = eventTap {
             CGEvent.tapEnable(tap: eventTap, enable: false)
         }
+    }
+
+    private static let eventCallback: CGEventTapCallBack = { (proxy, type, event, refcon) -> Unmanaged<CGEvent>? in
+        guard let refcon = refcon else { return Unmanaged.passRetained(event) }
+        let mySelf = Unmanaged<KeyListener>.fromOpaque(refcon).takeUnretainedValue()
+        return mySelf.handleEvent(proxy: proxy, type: type, event: event)
+    }
+
+    private func handleEvent(proxy: CGEventTapProxy?, type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
+        if type == .keyDown && settings.isThockEnabled {
+            let keyCode = event.getIntegerValueField(.keyboardEventKeycode)
+            print("Key Pressed: \(keyCode)")
+
+            if let sound = NSSound(named: NSSound.Name("Hero"))?.copy() as? NSSound {
+                sound.play()
+            }
+        }
+        return Unmanaged.passRetained(event)
     }
 }
