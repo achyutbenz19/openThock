@@ -1,5 +1,6 @@
 import Cocoa
 import SwiftUI
+import AppKit
 
 class KeyListener: ObservableObject {
     private var eventTap: CFMachPort?
@@ -13,7 +14,7 @@ class KeyListener: ObservableObject {
     }
 
     private func setupEventTap() {
-        let eventMask = (1 << CGEventType.keyDown.rawValue) 
+        let eventMask = (1 << CGEventType.keyDown.rawValue)
         eventTap = CGEvent.tapCreate(
             tap: .cgSessionEventTap,
             place: .headInsertEventTap,
@@ -23,6 +24,10 @@ class KeyListener: ObservableObject {
                 if type == .keyDown {
                     let keyCode = event.getIntegerValueField(.keyboardEventKeycode)
                     print("Key Pressed: \(keyCode)")
+
+                    if let sound = NSSound(named: NSSound.Name("Hero"))?.copy() as? NSSound {
+                        sound.play()
+                    }
                 }
 
                 return Unmanaged.passRetained(event)
@@ -36,7 +41,6 @@ class KeyListener: ObservableObject {
             CGEvent.tapEnable(tap: eventTap, enable: true)
         }
     }
-
 
     func stopListening() {
         if let eventTap = eventTap {
