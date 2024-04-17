@@ -51,6 +51,7 @@ class KeyListener: ObservableObject {
             print("Key Pressed: \(keyCode)")
 
             if let sound = NSSound(named: NSSound.Name("Hero"))?.copy() as? NSSound {
+                sound.volume = Float(CGFloat(settings.volumeLevel / 100.0))
                 sound.play()
             }
         }
