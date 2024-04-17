@@ -1,11 +1,17 @@
 import SwiftUI
 
 @main
-struct thockApp: App {
+struct ThockApp: App {
+    @StateObject var settingsViewModel = SettingsViewModel()
+    
     var body: some Scene {
         MenuBarExtra("Menu", systemImage: "keyboard.macwindow") {
-            Menu()
+            Menu(settingsViewModel: settingsViewModel)
         }
         .menuBarExtraStyle(.window)
+        
+        WindowGroup {
+            Sound(settingsViewModel: settingsViewModel)
+        }
     }
 }
