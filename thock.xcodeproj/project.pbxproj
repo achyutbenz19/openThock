@@ -11,6 +11,8 @@
 		A72AA7FD2BCF658700AEEC81 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72AA7FC2BCF658700AEEC81 /* App.swift */; };
 		A72AA8012BCF658A00AEEC81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A72AA8002BCF658A00AEEC81 /* Assets.xcassets */; };
 		A72AA8042BCF658A00AEEC81 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A72AA8032BCF658A00AEEC81 /* Preview Assets.xcassets */; };
+		A7A002882BD1DEBD00F5C363 /* thock-release.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7A002862BD1DEBD00F5C363 /* thock-release.wav */; };
+		A7A002892BD1DEBD00F5C363 /* thock-press.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7A002872BD1DEBD00F5C363 /* thock-press.wav */; };
 		A7DD1F0E2BD03DA400FA0207 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DD1F0D2BD03DA400FA0207 /* MenuViewModel.swift */; };
 		A7DD1F102BD03E0400FA0207 /* Listener.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DD1F0F2BD03E0400FA0207 /* Listener.swift */; };
 /* End PBXBuildFile section */
@@ -22,6 +24,8 @@
 		A72AA8002BCF658A00AEEC81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A72AA8032BCF658A00AEEC81 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A72AA8052BCF658A00AEEC81 /* thock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = thock.entitlements; sourceTree = "<group>"; };
+		A7A002862BD1DEBD00F5C363 /* thock-release.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "thock-release.wav"; path = "../../../../Downloads/thock-release.wav"; sourceTree = "<group>"; };
+		A7A002872BD1DEBD00F5C363 /* thock-press.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "thock-press.wav"; path = "../../../../Downloads/thock-press.wav"; sourceTree = "<group>"; };
 		A7DD1F0D2BD03DA400FA0207 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		A7DD1F0F2BD03E0400FA0207 /* Listener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listener.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -60,6 +64,8 @@
 				A7DD1F0F2BD03E0400FA0207 /* Listener.swift */,
 				A711EF082BCF6E3100FA081E /* Menu.swift */,
 				A7DD1F0D2BD03DA400FA0207 /* MenuViewModel.swift */,
+				A7A002872BD1DEBD00F5C363 /* thock-press.wav */,
+				A7A002862BD1DEBD00F5C363 /* thock-release.wav */,
 				A72AA8002BCF658A00AEEC81 /* Assets.xcassets */,
 				A72AA8052BCF658A00AEEC81 /* thock.entitlements */,
 				A72AA8022BCF658A00AEEC81 /* Preview Content */,
@@ -135,6 +141,8 @@
 			files = (
 				A72AA8042BCF658A00AEEC81 /* Preview Assets.xcassets in Resources */,
 				A72AA8012BCF658A00AEEC81 /* Assets.xcassets in Resources */,
+				A7A002892BD1DEBD00F5C363 /* thock-press.wav in Resources */,
+				A7A002882BD1DEBD00F5C363 /* thock-release.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
