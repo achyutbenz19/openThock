@@ -5,6 +5,7 @@ import AppKit
 class KeyListener: ObservableObject {
     private var eventTap: CFMachPort?
     @ObservedObject var settings: SettingsViewModel
+    private var activeKeys: Set<CGKeyCode> = []
 
     init(settings: SettingsViewModel) {
         self.settings = settings
@@ -16,7 +17,7 @@ class KeyListener: ObservableObject {
     }
 
     private func setupEventTap() {
-        let eventMask = (1 << CGEventType.keyDown.rawValue)
+        let eventMask = (1 << CGEventType.keyDown.rawValue) | (1 << CGEventType.keyUp.rawValue)
         eventTap = CGEvent.tapCreate(
             tap: .cgSessionEventTap,
             place: .headInsertEventTap,
@@ -46,19 +47,30 @@ class KeyListener: ObservableObject {
     }
 
     private func handleEvent(proxy: CGEventTapProxy?, type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
-        if type == .keyDown && settings.isThockEnabled {
-            let keyCode = event.getIntegerValueField(.keyboardEventKeycode)
-            print("Key Pressed: \(keyCode)")
-
-            if let soundURL = Bundle.main.url(forResource: "thock", withExtension: "wav"),
-               let sound = NSSound(contentsOf: soundURL, byReference: false) {
-                sound.volume = Float(CGFloat(settings.volumeLevel / 100.0))
-                sound.play()
-            } else {
-                print("Failed to load sound.")
+        let keyCode = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
+        switch type {
+        case .keyDown:
+            if !activeKeys.contains(keyCode) {
+                activeKeys.insert(keyCode)
+                if settings.isThockEnabled {
+                    playSoundForKeyPress()
+                }
             }
+        case .keyUp:
+            activeKeys.remove(keyCode)
+        default:
+            break
         }
         return Unmanaged.passRetained(event)
     }
 
+    private func playSoundForKeyPress() {
+        if let soundURL = Bundle.main.url(forResource: "thock", withExtension: "wav"),
+           let sound = NSSound(contentsOf: soundURL, byReference: false) {
+            sound.volume = Float(CGFloat(settings.volumeLevel / 100.0))
+            sound.play()
+        } else {
+            print("Failed to load sound.")
+        }
+    }
 }
