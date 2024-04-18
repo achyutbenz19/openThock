@@ -6,6 +6,8 @@ class KeyListener: ObservableObject {
     private var eventTap: CFMachPort?
     @ObservedObject var settings: SettingsViewModel
     private var activeKeys: Set<CGKeyCode> = []
+    private let pressSoundName: String = "thock-press"
+    private let releaseSoundName: String = "thock-release"
 
     init(settings: SettingsViewModel) {
         self.settings = settings
@@ -53,24 +55,27 @@ class KeyListener: ObservableObject {
             if !activeKeys.contains(keyCode) {
                 activeKeys.insert(keyCode)
                 if settings.isThockEnabled {
-                    playSoundForKeyPress()
+                    playSound(soundName: pressSoundName)
                 }
             }
         case .keyUp:
             activeKeys.remove(keyCode)
+            if settings.isThockEnabled {
+                playSound(soundName: releaseSoundName)
+            }
         default:
             break
         }
         return Unmanaged.passRetained(event)
     }
 
-    private func playSoundForKeyPress() {
-        if let soundURL = Bundle.main.url(forResource: "thock", withExtension: "wav"),
+    private func playSound(soundName: String) {
+        if let soundURL = Bundle.main.url(forResource: soundName, withExtension: "wav"),
            let sound = NSSound(contentsOf: soundURL, byReference: false) {
             sound.volume = Float(CGFloat(settings.volumeLevel / 100.0))
             sound.play()
         } else {
-            print("Failed to load sound.")
+            print("Failed to load sound \(soundName).")
         }
     }
 }
