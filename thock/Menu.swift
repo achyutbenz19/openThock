@@ -42,7 +42,6 @@ struct Menu: View {
         }
         .padding(8)
         .frame(width: 200)
-        .background(Color(red: 0.95, green: 0.95, blue: 0.95))
     }
 
     private func quitApplication() {
